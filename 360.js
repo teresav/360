@@ -11,13 +11,18 @@ var camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeigh
 // camera.position.z = 1;
 
 //renderer
-var renderer = new THREE.WebGLRenderer({antialias: false, alpha: false});
+var renderer = new THREE.WebGLRenderer({antialias: true, alpha: false});
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild( renderer.domElement );
 
-//light
-var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 );
+//lights
+var light = new THREE.HemisphereLight( 0xaa0000, 0x0000ff, 2 );
 scene.add( light );
+
+var light = new THREE.PointLight( 0x9900B6, 2, 100 );
+light.position.set( 3, 3, 0 );
+scene.add( light );
+
 
 
 //add cube
@@ -28,7 +33,7 @@ scene.add( light );
 // scene.add( cube );
 
 //sphere
-var geometry = new THREE.SphereGeometry( 2, 16, 16 );
+var geometry = new THREE.SphereGeometry( 2, 128, 128 );
 for ( var i = 0; i < geometry.faces.length; i ++ ) {
 
     var face = geometry.faces[ i ];
@@ -36,7 +41,7 @@ for ( var i = 0; i < geometry.faces.length; i ++ ) {
 
 }
 
-var sphere = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { vertexColors: THREE.FaceColors, side:THREE.BackSide} ));
+var sphere = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial( { vertexColors: THREE.FaceColors, side:THREE.BackSide, metalness:.4, roughness:0} ));
 scene.add( sphere );
 
 //render the scene!
@@ -44,8 +49,8 @@ function animate() {
 	requestAnimationFrame( animate );
   // cube.rotation.x += 0.03;
   // cube.rotation.y += 0.03;
-  sphere.rotation.x += 0.0001;
-  sphere.rotation.y -= 0.0001;
+  sphere.rotation.x += 0.003;
+  sphere.rotation.y -= 0.003;
 	renderer.render( scene, camera );
 }
 animate();
